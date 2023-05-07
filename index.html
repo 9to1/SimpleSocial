@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Social</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<h1>Simple Social</h1>
+	</header>
+	<main>
+		<form>
+			<textarea placeholder="what'cha doin?" rows="3"></textarea>
+			<button>Socialice</button>
+		</form>
+		<section id="tweets">
+			<!-- Hier werden die Tweets angezeigt -->
+		</section>
+		<section id="upload">
+			<h2>Foto Upload</h2>
+			<input type="file" id="file-input">
+			<button id="upload-button">Upload!</button>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; 2023 Simple Social</p>
+	</footer>
+	<script>
+		const tweetForm = document.querySelector('form');
+		const tweetInput = document.querySelector('textarea');
+		const tweetList = document.querySelector('#tweets');
+
+		tweetForm.addEventListener('submit', function(e) {
+		    e.preventDefault();
+
+		    if(tweetInput.value.trim() === '') {
+		        return;
+		    }
+
+		    const tweet = document.createElement('div');
+		    tweet.classList.add('tweet');
+
+		    const tweetContent = document.createElement('p');
+		    tweetContent.textContent = tweetInput.value;
+
+		    const tweetDate = document.createElement('p');
+		    tweetDate.classList.add('date');
+		    tweetDate.textContent = new Date().toLocaleString();
+
+		    tweet.appendChild(tweetContent);
+		    tweet.appendChild(tweetDate);
+
+		    tweetList.appendChild(tweet);
+
+		    tweetInput.value = '';
+		});
+
+		const fileInput = document.querySelector('#file-input');
+		const uploadButton = document.querySelector('#upload-button');
+
+		uploadButton.addEventListener('click', function(e) {
+			e.preventDefault();
+
+			const file = fileInput.files[0];
+
+			if(file) {
+				const reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					const image = document.createElement('img');
+					image.src = e.target.result;
+
+					const uploadSection = document.querySelector('#upload');
+					uploadSection.appendChild(image);
+				}
+			}
+		});
+	</script>
+</body>
+</html>
