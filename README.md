@@ -1,2 +1,2 @@
 # SimpleSocial
-You can socialize
+This is just an Educational code.
